@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Object_Oriented_Programming_Assignment_2
 {
     internal class Printer
     {
-        public void RollEnter(int playerNum)
+        public void RollEnter(string playerName)
         {
             Console.WriteLine("------------------------------------------------");
-            Console.WriteLine($"Player {playerNum} Enter to roll your dice: ");
+            Console.WriteLine($"Player {playerName} Enter to roll your dice: ");
             Console.WriteLine("------------------------------------------------");
             Console.ReadLine();
         }
@@ -24,11 +25,12 @@ namespace Object_Oriented_Programming_Assignment_2
             Console.WriteLine("1: Play Sevens Out");
             Console.WriteLine("2: Play Three or More");
             Console.WriteLine("3: Learn the Game Rules");
-            Console.WriteLine("4: View the Scoreboard");
-            Console.WriteLine("5: Test Functionality of Games");
-            Console.WriteLine("6: Clear Console");
-            Console.WriteLine("7: Reset Scoreboard");
-            Console.WriteLine("8: Exit Game");
+            Console.WriteLine("4: Add new Player");
+            Console.WriteLine("5: View the Scoreboard");
+            Console.WriteLine("6: Test Functionality of Games");
+            Console.WriteLine("7: Clear Console");
+            Console.WriteLine("8: Reset Scoreboard");
+            Console.WriteLine("9: Exit Game");
             Console.WriteLine("------------------------------------------------");
         }
         public void PrintRules() 
@@ -70,6 +72,35 @@ namespace Object_Oriented_Programming_Assignment_2
             Console.WriteLine("------------------------------------------------");
             return OptionChoice(2);
         
+        }
+        public string NewPlayerName() 
+        {
+            string newPlayerName;
+            while(true) 
+            {
+                Console.WriteLine("------------------------------------------------");
+                Console.WriteLine("Please enter Name:");
+                Console.WriteLine("------------------------------------------------");
+                while (true)
+                {
+                    newPlayerName = Console.ReadLine();
+                    Console.WriteLine("------------------------------------------------");
+                    if (string.IsNullOrEmpty(newPlayerName))
+                    { 
+                        Console.WriteLine("Please enter a name, dont leave field empty."); 
+                        Console.WriteLine("------------------------------------------------");
+                    }
+                    else { break; }
+                }
+                newPlayerName = char.ToUpper(newPlayerName[0]) + newPlayerName.Substring(1).ToLower();
+                switch (ConfirmChoice() )
+                {
+                    case 1:
+                        return newPlayerName;
+                    case 2:
+                        continue;
+                }   
+            }
         }
         public int OptionChoice(int optionLength)
         {

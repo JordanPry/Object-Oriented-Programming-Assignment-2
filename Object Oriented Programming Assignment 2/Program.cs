@@ -14,7 +14,7 @@ namespace Object_Oriented_Programming_Assignment_2
             Game.Sevens sevens = new Game.Sevens();
             Printer printer = new Printer();
             printer.UI();
-            int choice = printer.OptionChoice(8);
+            int choice = printer.OptionChoice(9);
             switch (choice)
             {
                 case 1:
@@ -27,18 +27,21 @@ namespace Object_Oriented_Programming_Assignment_2
                     printer.PrintRules();
                     break;
                 case 4:
-                    stats.PrintStats();
+                    stats.AddPlayer(printer.NewPlayerName());
                     break;
                 case 5:
-                    Console.WriteLine("TESTING CLASS NEEDS IMPLIMENTING");
+                    stats.PrintStats();
                     break;
                 case 6:
-                    Console.Clear();
+                    Console.WriteLine("TESTING CLASS NEEDS IMPLIMENTING");
                     break;
                 case 7:
-                    stats.ResetStats();
+                    Console.Clear();
                     break;
                 case 8:
+                    stats.ResetStats();
+                    break;
+                case 9:
                     bool exitCode = printer.ConfirmChoice() == 1 ? true : false;
                     if (exitCode) { Environment.Exit(0); }
                     break;
@@ -47,7 +50,6 @@ namespace Object_Oriented_Programming_Assignment_2
         static void Main(string[] args)
         {
             while (true) {StartScreen(); }
-            
         }
     }
 }

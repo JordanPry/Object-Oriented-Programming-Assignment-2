@@ -31,6 +31,24 @@ namespace Object_Oriented_Programming_Assignment_2
             string data = JsonConvert.SerializeObject(newStats);
             File.WriteAllText(filePath, data);
         }
+
+        public string LoadPlayer() 
+        {
+            while (true)
+                {
+                string playerName = NewPlayerName(); //Using same function as creating new player to loop to find name
+                List<GameStats> stats = LoadStats();
+                bool nameExists = stats.Exists(p => p.PlayerName == playerName);
+                if (nameExists)
+                {
+                    GameStats player = stats.Find(p => p.PlayerName == playerName);
+                    Console.WriteLine("Player Found");
+                    return player.PlayerName;
+                }
+                else { Console.WriteLine("Player Not Found, Try again"); }
+            }
+        
+        }
         public void UpdateStats(string playerName, string gameType, bool gameWin) 
         {
             List<GameStats> stats = LoadStats();
@@ -49,6 +67,31 @@ namespace Object_Oriented_Programming_Assignment_2
                     SaveStats(stats);
                     return;
             }  
+        }
+        public void AddPlayer(string playerName) 
+        {
+
+            List<GameStats> players = LoadStats();
+            bool nameExists = players.Exists(p => p.PlayerName == playerName);
+            if (!nameExists)
+            {
+                GameStats newPlayer = new GameStats
+                {
+                    PlayerName = playerName,
+                    Game7Wins = 0,
+                    Game3Wins = 0,
+                    Game7Played = 0,
+                    Game3Played = 0
+                };
+                players.Add(newPlayer);
+                SaveStats(players);
+                //return 1;
+            }
+            else 
+            {
+                Console.WriteLine("Player Name already exists please enter a Different Name");
+                //return -1;
+}
         }
 
         public void ResetStats()
@@ -69,8 +112,6 @@ namespace Object_Oriented_Programming_Assignment_2
                 case 2:
                     return;
             }
-        
-        
         }
         public void PrintStats() 
         {
