@@ -1,0 +1,23 @@
+[
+{
+"PlayerName": "Player 1",
+"Game7Wins": 0,
+"Game3Wins": 0,
+"Game7Played": 0,
+"Game3Played": 0
+},
+{
+"PlayerName": "Player 2",
+"Game7Wins": 0,
+"Game3Wins": 0,
+"Game7Played": 0,
+"Game3Played": 0
+},
+{
+"PlayerName": "Computer",
+"Game7Wins": 0,
+"Game3Wins": 0,
+"Game7Played": 0,
+"Game3Played": 0
+}
+]
