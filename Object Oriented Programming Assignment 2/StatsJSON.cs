@@ -23,20 +23,51 @@ namespace Object_Oriented_Programming_Assignment_2
 
         public List<GameStats> LoadStats()
         {
-            string data = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<List<GameStats>>(data);
+            try
+            {
+                string data = File.ReadAllText(filePath);
+                return JsonConvert.DeserializeObject<List<GameStats>>(data);
+            }
+            catch (FileNotFoundException) 
+            {
+                Console.WriteLine("File Not Found, Creating file, Creating new File");
+                System.Threading.Thread.Sleep(1500);
+                return CreateFile();
+            
+            }
         }
         public void SaveStats(List<GameStats> newStats)
         {
             string playerData = JsonConvert.SerializeObject(newStats);
             File.WriteAllText(filePath, playerData);
         }
+        public List<GameStats> CreateFile() 
+        {
+            string[] defaultNames = { "Player 1", "Player 2", "Computer" };
+            var defaultPlayers = new List<GameStats>();
 
+            foreach (string name in defaultNames)
+            {
+                var defaultPlayer = new GameStats
+                {
+                    PlayerName = name,
+                    Game7Wins = 0,
+                    Game3Wins = 0,
+                    Game7Played = 0,
+                    Game3Played = 0
+                };
+                defaultPlayers.Add(defaultPlayer);
+            }
+            SaveStats(defaultPlayers);
+            return defaultPlayers;
+        
+        }
         public string LoadPlayer() 
         {
             while (true)
                 {
                 string playerName = NewPlayerName(); //Using same function as creating new player to loop to find name
+                if (playerName == "Q") { return playerName; }
                 List<GameStats> stats = LoadStats();
                 bool nameExists = stats.Exists(p => p.PlayerName == playerName);
                 if (nameExists)
@@ -69,12 +100,12 @@ namespace Object_Oriented_Programming_Assignment_2
             }
             
         }
-        public void AddPlayer(string playerName) 
+        public void AddPlayer(string playerName)
         {
 
             List<GameStats> players = LoadStats();
             bool nameExists = players.Exists(p => p.PlayerName == playerName);
-            if (!nameExists)
+            if (!nameExists && playerName != "Q")
             {
                 GameStats newPlayer = new GameStats
                 {
@@ -86,13 +117,12 @@ namespace Object_Oriented_Programming_Assignment_2
                 };
                 players.Add(newPlayer);
                 SaveStats(players);
-                //return 1;
             }
-            else 
+            else if (playerName == "Q") { }
+            else
             {
                 Console.WriteLine("Player Name already exists please enter a Different Name");
-                //return -1;
-}
+            }
         }
 
         public void ResetStats()

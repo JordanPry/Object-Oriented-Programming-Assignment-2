@@ -101,15 +101,11 @@ namespace Object_Oriented_Programming_Assignment_2
             {
                 switch (amount) 
                 {
-                    case 2:
-                        return 0;
                     case 3:
                         return 3;
                     case 4:
                         return 6;
                     case 5:
-                        return 12;
-                    case 6:
                         return 12;
                     default: 
                         return 0;
@@ -130,24 +126,28 @@ namespace Object_Oriented_Programming_Assignment_2
                 return printer.OptionChoice(2) == 1;
             
             }
-            public void PrintScore(string playerName, int playerScore) 
+            
+            public bool IsGameOver(Game game, string player1Name, string opName, int player1Total, int player2Total) 
             {
-                Console.WriteLine("------------------------------------------------");
-                Console.WriteLine($"{playerName}'s Score: {playerScore}");
-                Console.WriteLine("------------------------------------------------");
+                if (player1Total >= 20)
+                {
+                    game.EndGame(false, player1Name, opName, "Threes");
+                    return false;
+                }
+                else if (player2Total >= 20)
+                {
+                    game.EndGame(false, opName, player1Name, "Threes");
+                    return false;
+                }
+                return true;
 
-            }
-            public void PrintUniqueRolls(string playerName, int uniqueRolls) 
-            {
-                Console.WriteLine("------------------------------------------------");
-                Console.WriteLine($"{playerName} has {uniqueRolls} unique rolls");
-                Console.WriteLine("------------------------------------------------");
             }
             public void GameStart(Printer printer, StatsJSON stats) 
             {
                 Game game = new Game();
                 bool twoPlayer = game.isTwoPlayer();
                 string player1Name = stats.LoadPlayer();
+                if (player1Name == "Q") { return; }
                 string opName = twoPlayer ? stats.LoadPlayer() : "Computer";
                 int player1Total = 0;
                 int player2Total = 0;
@@ -163,10 +163,10 @@ namespace Object_Oriented_Programming_Assignment_2
                     int player2OfAKind = OfAKind(player2Rolls);
                     //Print Player 1 Rolls and their Unique amount of rolls
                     printer.PrintRolls(player1Rolls, player1Name);
-                    PrintUniqueRolls(player1Name, player1OfAKind);
+                    printer.PrintUniqueRolls(player1Name, player1OfAKind);
                     //Print Player 2 Rolls and their Unique amount of rolls
                     printer.PrintRolls(player2Rolls, opName);
-                    PrintUniqueRolls(opName, player2OfAKind);
+                    printer.PrintUniqueRolls(opName, player2OfAKind);
                     if (player1OfAKind <= 2 && RollAgain(player1Name, printer))
                     {
                         player1Rolls = Roll5Dice();
@@ -174,7 +174,7 @@ namespace Object_Oriented_Programming_Assignment_2
                     else 
                     {
                         player1Total += ScoreAdd(player1OfAKind);
-                        PrintScore(player1Name, player1Total);
+                        printer.PrintScore(player1Name, player1Total);
 
                     }
                     if (player2OfAKind <= 2 && RollAgain(opName, printer))
@@ -184,18 +184,9 @@ namespace Object_Oriented_Programming_Assignment_2
                     else
                     {
                         player2Total += ScoreAdd(player2OfAKind);
-                        PrintScore(opName, player2Total);
+                        printer.PrintScore(opName, player2Total);
                     }
-                    if (player1Total >= 20)
-                    {
-                        game.EndGame(false, player1Name, opName, "Threes");
-                        gameOn  = false;
-                    }
-                    else if (player2Total >= 20) 
-                    {
-                        game.EndGame(false, opName, player1Name, "Threes");
-                        gameOn = false;
-                    }
+                    gameOn = IsGameOver(game, player1Name, opName, player1Total, player2Total);
                 }
             }
         }
@@ -213,10 +204,16 @@ namespace Object_Oriented_Programming_Assignment_2
                 int dice2 = Roll;
                 return new int[] { dice1, dice2 };
             }
+            public bool EqualsSeven(int[] rolls) 
+            {
+                return rolls.Sum() == 7;
+            
+            }
             public void GameStart(Printer printer, StatsJSON stats)
             {
                 Game game = new Game();
                 string player1Name = stats.LoadPlayer();
+                if (player1Name == "Q") { return; }
                 string opName = game.isTwoPlayer() ? stats.LoadPlayer() : "Computer";
                 int playerTotal = 0;
                 int computerTotal = 0;
@@ -228,22 +225,12 @@ namespace Object_Oriented_Programming_Assignment_2
                 {
                     printer.RollEnter(player1Name);
                     int[] playerRolls = GetRolls();
-                    if (opName != "Computer")
-                    {
-                        printer.RollEnter(opName);
-                    }
-                    else 
-                    {
-                        Console.WriteLine("------------------------------------------------");
-                        Console.WriteLine("Computer Rolling....");
-                        System.Threading.Thread.Sleep(500);
-                    }
+                    if (opName != "Computer") { printer.RollEnter(opName); }
                     int[] computerRolls = GetRolls();
-                    Console.WriteLine("------------------------------------------------");
-                    Console.WriteLine($"{player1Name} rolled a: {playerRolls[0]}\n {player1Name}  rolled a: : {playerRolls[1]}");
-                    Console.WriteLine($"{opName} rolled a: {computerRolls[0]}\n{opName} rolled a: {computerRolls[1]}");
-                    Console.WriteLine("------------------------------------------------");
-                    if (playerRolls[0] + playerRolls[1] == 7 || computerRolls[0] + computerRolls[1] == 7) { gameOn = false; }
+                    printer.PrintRolls(playerRolls, player1Name);
+                    printer.PrintRolls(computerRolls, opName);
+                    
+                    if (EqualsSeven(playerRolls)|| EqualsSeven(computerRolls)) { gameOn = false; }
                     else  
                     {
                         if (playerRolls[0] == playerRolls[1]) { playerTotal += playerRolls.Sum() * 2; } 
@@ -252,10 +239,10 @@ namespace Object_Oriented_Programming_Assignment_2
                         if (computerRolls[0] == computerRolls[1]) { computerTotal += computerRolls.Sum() * 2; }
                         else { computerTotal += computerRolls.Sum(); }
                     }
-                    Console.WriteLine($"{player1Name} Total Score: {playerTotal}");
-                    Console.WriteLine($"{opName} Total Score: {computerTotal}");
-                    Console.WriteLine("------------------------------------------------");    
+                    printer.PrintScore(player1Name, playerTotal);
+                    printer.PrintScore(opName, computerTotal);
                 }
+
                 bool isDraw = false;
                 if (playerTotal > computerTotal)
                 { gameWinner = player1Name; gameLoser = opName; }

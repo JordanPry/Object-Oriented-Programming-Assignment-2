@@ -17,7 +17,7 @@ namespace Object_Oriented_Programming_Assignment_2
         public void RollEnter(string playerName)
         {
             Console.WriteLine("------------------------------------------------");
-            Console.WriteLine($"Player {playerName} Enter to roll your dice: ");
+            Console.WriteLine($"{playerName} press enter to roll your dice: ");
             Console.WriteLine("------------------------------------------------");
             Console.ReadLine();
         }
@@ -103,6 +103,7 @@ namespace Object_Oriented_Programming_Assignment_2
             {
                 Console.WriteLine("------------------------------------------------");
                 Console.WriteLine("Please enter Name:");
+                Console.WriteLine("Enter \"Q\" to return to Main Menu ");
                 Console.WriteLine("------------------------------------------------");
                 while (true)
                 {
@@ -124,6 +125,29 @@ namespace Object_Oriented_Programming_Assignment_2
                         continue;
                 }   
             }
+        }
+        /// <summary>
+        /// Prints players score
+        /// </summary>
+        /// <param name="playerName"></param>
+        /// <param name="playerScore"></param>
+        public void PrintScore(string playerName, int playerScore)
+        {
+            Console.WriteLine("------------------------------------------------");
+            Console.WriteLine($"{playerName}'s Score: {playerScore}");
+            Console.WriteLine("------------------------------------------------");
+
+        }
+        /// <summary>
+        /// Prints unique rolls by player
+        /// </summary>
+        /// <param name="playerName"></param>
+        /// <param name="uniqueRolls"></param>
+        public void PrintUniqueRolls(string playerName, int uniqueRolls)
+        {
+            Console.WriteLine("------------------------------------------------");
+            Console.WriteLine($"{playerName} has {uniqueRolls} unique rolls");
+            Console.WriteLine("------------------------------------------------");
         }
         /// <summary>
         /// Method which is used throughout the code to confirm user chouses in a error handled way 

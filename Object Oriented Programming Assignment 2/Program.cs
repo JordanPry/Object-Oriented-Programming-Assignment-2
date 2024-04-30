@@ -8,6 +8,19 @@ namespace Object_Oriented_Programming_Assignment_2
 {
     internal class Program 
     {
+
+        public static bool PlayerAmount(StatsJSON stats) 
+        {
+            List < StatsJSON.GameStats > playerStats = stats.LoadStats();
+            if (playerStats.Count >= 2) { return true; }
+            else 
+            {
+                Console.WriteLine("------------------------------------------------");
+                Console.WriteLine("!!!NOT ENOUGH PLAYERS!!!\nPlease add more Players");
+                Console.WriteLine("------------------------------------------------");
+                return false; }
+        
+        }
         /// <summary>
         /// Main UI of the screen from here all choices are displayed 
         /// depending on user choice proceeds to the appropriate methods
@@ -17,16 +30,23 @@ namespace Object_Oriented_Programming_Assignment_2
             StatsJSON stats = new StatsJSON();
             Game.Sevens sevens = new Game.Sevens();
             Game.ThreeOrMore threes = new Game.ThreeOrMore();
+            Testing testing = new Testing();
             Printer printer = new Printer();
             printer.UI();
             int choice = printer.OptionChoice(9);
             switch (choice)
             {
                 case 1:
-                    sevens.GameStart(printer, stats);
+                    if (PlayerAmount(stats))
+                    {
+                        sevens.GameStart(printer, stats);
+                    }
                     break;
                 case 2:
-                    threes.GameStart(printer, stats);
+                    if (PlayerAmount(stats))
+                    {
+                        threes.GameStart(printer, stats);
+                    }
                     break;
                 case 3:
                     printer.PrintRules();
@@ -38,7 +58,7 @@ namespace Object_Oriented_Programming_Assignment_2
                     stats.PrintStats();
                     break;
                 case 6:
-                    Console.WriteLine("TESTING CLASS NEEDS IMPLIMENTING");
+                    testing.TestBoth();
                     break;
                 case 7:
                     Console.Clear();
