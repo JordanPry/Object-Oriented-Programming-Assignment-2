@@ -8,5 +8,10 @@ namespace Object_Oriented_Programming_Assignment_2
 {
     internal class Testing
     {
+        Game.Sevens sevens = new Game.Sevens();
+        Game.ThreeOrMore threeOrMore = new Game.ThreeOrMore();
+
+
+
     }
 }

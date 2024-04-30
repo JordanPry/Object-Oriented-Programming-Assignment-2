@@ -15,6 +15,9 @@ namespace Object_Oriented_Programming_Assignment_2
             _random = new Random();
             newRoll();
         }
+        /// <summary>
+        /// Method that resets the roll and generates a new random number for roll
+        /// </summary>
         public void newRoll() 
         {
             _roll = DiceRoller();

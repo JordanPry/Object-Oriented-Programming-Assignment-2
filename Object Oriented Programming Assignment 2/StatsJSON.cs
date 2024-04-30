@@ -21,15 +21,15 @@ namespace Object_Oriented_Programming_Assignment_2
 
         private string filePath = "gameStats.json";
 
-        public  List<GameStats> LoadStats()
+        public List<GameStats> LoadStats()
         {
             string data = File.ReadAllText(filePath);
             return JsonConvert.DeserializeObject<List<GameStats>>(data);
         }
         public void SaveStats(List<GameStats> newStats)
         {
-            string data = JsonConvert.SerializeObject(newStats);
-            File.WriteAllText(filePath, data);
+            string playerData = JsonConvert.SerializeObject(newStats);
+            File.WriteAllText(filePath, playerData);
         }
 
         public string LoadPlayer() 
@@ -66,7 +66,8 @@ namespace Object_Oriented_Programming_Assignment_2
                     player.Game3Played++;
                     SaveStats(stats);
                     return;
-            }  
+            }
+            
         }
         public void AddPlayer(string playerName) 
         {
@@ -105,7 +106,7 @@ namespace Object_Oriented_Programming_Assignment_2
                         player.Game7Wins = 0;
                         player.Game7Played = 0;
                         player.Game3Played = 0;
-                        player.Game3Played = 0;
+                        player.Game3Wins = 0;
                     }
                     SaveStats(playerStats);
                     return;

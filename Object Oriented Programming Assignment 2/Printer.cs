@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,10 @@ namespace Object_Oriented_Programming_Assignment_2
 {
     internal class Printer
     {
+        /// <summary>
+        /// Printer method that gives user information for the UI
+        /// </summary>
+        /// <param name="playerName"></param>
         public void RollEnter(string playerName)
         {
             Console.WriteLine("------------------------------------------------");
@@ -16,6 +21,9 @@ namespace Object_Oriented_Programming_Assignment_2
             Console.WriteLine("------------------------------------------------");
             Console.ReadLine();
         }
+        /// <summary>
+        /// Printer for the main UI displaying the users option choices
+        /// </summary>
         public  void UI()
         {
             Console.WriteLine("------------------------------------------------");
@@ -33,6 +41,9 @@ namespace Object_Oriented_Programming_Assignment_2
             Console.WriteLine("9: Exit Game");
             Console.WriteLine("------------------------------------------------");
         }
+        /// <summary>
+        /// Rules and instructions for how the game works
+        /// </summary>
         public void PrintRules() 
         {
             Console.WriteLine("------------------------------------------------");
@@ -55,6 +66,9 @@ namespace Object_Oriented_Programming_Assignment_2
             Console.WriteLine("------------------------------------------------");
 
         }
+        /// <summary>
+        /// Displays prompts for user to select from 
+        /// </summary>
         public void TwoPlayerText() 
         {
             Console.WriteLine("------------------------------------------------");
@@ -63,6 +77,10 @@ namespace Object_Oriented_Programming_Assignment_2
             Console.WriteLine("2: Against another Player");
             Console.WriteLine("------------------------------------------------");
         }
+        /// <summary>
+        /// Option for user to confirm their choices made
+        /// </summary>
+        /// <returns>1 or 2 depending on user choice </returns>
         public int ConfirmChoice() 
         {
             Console.WriteLine("------------------------------------------------");
@@ -73,6 +91,11 @@ namespace Object_Oriented_Programming_Assignment_2
             return OptionChoice(2);
         
         }
+        /// <summary>
+        /// DIsplays and prompts user for a name then formats string so first case is upper and rest is lower
+        /// Checks whether name exists already within the player database
+        /// </summary>
+        /// <returns>formatted player name</returns>
         public string NewPlayerName() 
         {
             string newPlayerName;
@@ -102,6 +125,11 @@ namespace Object_Oriented_Programming_Assignment_2
                 }   
             }
         }
+        /// <summary>
+        /// Method which is used throughout the code to confirm user chouses in a error handled way 
+        /// </summary>
+        /// <param name="optionLength"></param>
+        /// <returns></returns>
         public int OptionChoice(int optionLength)
         {
             int userChoice;
@@ -123,6 +151,22 @@ namespace Object_Oriented_Programming_Assignment_2
                 }
 
             }
+        }
+        /// <summary>
+        /// Prints the players rolls in order and displays them
+        /// </summary>
+        /// <param name="rolls"></param>
+        /// <param name="playerName"></param>
+        public void PrintRolls(int[] rolls, string playerName) 
+        {
+            int counter = 1;
+            Console.WriteLine(playerName);
+            Console.WriteLine("------------------------------------------------");
+            foreach (int roll in rolls) 
+            {
+                Console.WriteLine($"Roll {counter}: {roll}");
+            }
+            Console.WriteLine("------------------------------------------------");
         }
     }
 }

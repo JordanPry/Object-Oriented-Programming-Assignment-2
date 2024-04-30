@@ -6,22 +6,27 @@ using System.Threading.Tasks;
 
 namespace Object_Oriented_Programming_Assignment_2
 {
-    internal class Program
+    internal class Program 
     {
+        /// <summary>
+        /// Main UI of the screen from here all choices are displayed 
+        /// depending on user choice proceeds to the appropriate methods
+        /// </summary>
         public static void StartScreen()
         {
             StatsJSON stats = new StatsJSON();
             Game.Sevens sevens = new Game.Sevens();
+            Game.ThreeOrMore threes = new Game.ThreeOrMore();
             Printer printer = new Printer();
             printer.UI();
             int choice = printer.OptionChoice(9);
             switch (choice)
             {
                 case 1:
-                    sevens.GameStart();
+                    sevens.GameStart(printer, stats);
                     break;
                 case 2:
-                    sevens.GameStart();
+                    threes.GameStart(printer, stats);
                     break;
                 case 3:
                     printer.PrintRules();
@@ -47,6 +52,10 @@ namespace Object_Oriented_Programming_Assignment_2
                     break;
             }
         }
+        /// <summary>
+        /// Main entry point of the application, will continously run the program until the exit code is entered
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             while (true) {StartScreen(); }
