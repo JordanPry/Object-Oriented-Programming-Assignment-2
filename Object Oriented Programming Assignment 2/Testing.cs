@@ -16,6 +16,7 @@ namespace Object_Oriented_Programming_Assignment_2
     {
         Game.Sevens sevens = new Game.Sevens();
         Game.ThreeOrMore threeOrMore = new Game.ThreeOrMore();
+        Dice dice = new Dice();
 
         public class TestOutcomes
         {
@@ -133,7 +134,7 @@ namespace Object_Oriented_Programming_Assignment_2
             int[] testRolls;
             while (true) 
             {
-                testRolls = sevens.GetRolls();
+                testRolls = dice.RollDice(2);
                 if (sevens.EqualsSeven(testRolls)) { break; }
             }
             Debug.Assert(sevens.EqualsSeven(testRolls) == (testRolls[0] + testRolls[1] == 7), "GAME DOESNT END AT CORRECT ENDPOINT");
@@ -145,7 +146,8 @@ namespace Object_Oriented_Programming_Assignment_2
         /// <returns></returns>
         private bool TestThrees() 
         {
-            int[] rolls = threeOrMore.Roll5Dice();
+
+            int[] rolls = dice.RollDice(5);
             int uniqueRolls = threeOrMore.OfAKind(rolls);
             int score = threeOrMore.ScoreAdd(uniqueRolls);
             int testScore = 0;
@@ -167,7 +169,7 @@ namespace Object_Oriented_Programming_Assignment_2
             Debug.Assert(threeOrMore.ScoreAdd(uniqueRolls) == testScore, "POINT TOTAL DOESNT CORRECTLY SUM" );
             while (true) 
             {
-                if (uniqueRolls == 2) { rolls = threeOrMore.Roll5Dice(); uniqueRolls = threeOrMore.OfAKind(rolls); }
+                if (uniqueRolls == 2) { rolls = dice.RollDice(5); uniqueRolls = threeOrMore.OfAKind(rolls); }
                 score += threeOrMore.ScoreAdd(uniqueRolls);
                 if (score >=20) { break; }
             }

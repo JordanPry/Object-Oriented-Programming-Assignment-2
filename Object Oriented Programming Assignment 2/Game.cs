@@ -21,7 +21,7 @@ namespace Object_Oriented_Programming_Assignment_2
         /// <param name="gameWinner"></param>
         /// <param name="gameLoser"></param>
         /// <param name="gameType"></param>
-        public void EndGame(bool isDraw, string gameWinner, string gameLoser, string gameType)
+        protected void EndGame(bool isDraw, string gameWinner, string gameLoser, string gameType)
         {
             StatsJSON stats = new StatsJSON();
             if (isDraw)
@@ -47,30 +47,20 @@ namespace Object_Oriented_Programming_Assignment_2
         /// True if user answer == 1
         /// False if user answer == 2
         /// </returns>
-        public bool isTwoPlayer() 
+        protected bool isTwoPlayer() 
         {
             TwoPlayerText();
             bool twoPlayer = OptionChoice(2) == 1 ? false : true;
             return twoPlayer;
         }
+       
         public class ThreeOrMore : Dice
         {
-            /// <summary>
-            /// creates an int array which contains 5 numbers between 1-6
-            /// uses the newRoll method from the inherited dice class to get a new integer
-            /// </summary>
-            /// <returns></returns>
-            public int[] Roll5Dice() 
+            private int rollAmount = 5;
+            public override int[] RollDice(int diceAmount)
             {
-                int roll;
-                int[] rolls = new int[5];
-                for (int i = 0; i < 5; i++)
-                {
-                    newRoll();
-                    roll = Roll;
-                    rolls[i] = roll;
-                }
-                return rolls;
+                return base.RollDice(diceAmount);
+
             }
             /// <summary>
             /// Method to calculate unique amount of rolls within a users total rolls
@@ -120,7 +110,7 @@ namespace Object_Oriented_Programming_Assignment_2
             /// True if user enters 1
             /// False if user enters 2
             /// </returns>
-            bool RollAgain(string playerName, Printer printer) 
+            private bool RollAgain(string playerName, Printer printer) 
             {
                 Console.WriteLine($"{playerName} Would you like to roll again?");
                 return printer.OptionChoice(2) == 1;
@@ -138,7 +128,7 @@ namespace Object_Oriented_Programming_Assignment_2
             /// false if the game logic has been completed
             /// true if game still needs to be played
             /// </returns>
-            public bool IsGameOver(Game game, string player1Name, string opName, int player1Total, int player2Total) 
+            private bool IsGameOver(Game game, string player1Name, string opName, int player1Total, int player2Total) 
             {
                 if (player1Total >= 20)
                 {
@@ -172,9 +162,9 @@ namespace Object_Oriented_Programming_Assignment_2
                 while (gameOn)
                 {
                     printer.RollEnter(player1Name);
-                    int[] player1Rolls = Roll5Dice();
+                    int[] player1Rolls = RollDice(rollAmount);
                     if (twoPlayer) { printer.RollEnter(opName); }
-                    int[] player2Rolls = Roll5Dice();
+                    int[] player2Rolls = RollDice(rollAmount);
                     int player1OfAKind = OfAKind(player1Rolls);
                     int player2OfAKind = OfAKind(player2Rolls);
                     //Print Player 1 Rolls and their Unique amount of rolls
@@ -185,7 +175,7 @@ namespace Object_Oriented_Programming_Assignment_2
                     printer.PrintUniqueRolls(opName, player2OfAKind);
                     if (player1OfAKind <= 2 && RollAgain(player1Name, printer))
                     {
-                        player1Rolls = Roll5Dice();
+                        player1Rolls = RollDice(rollAmount);
                     }
                     else 
                     {
@@ -195,7 +185,7 @@ namespace Object_Oriented_Programming_Assignment_2
                     }
                     if (player2OfAKind <= 2 && RollAgain(opName, printer))
                     {
-                        player2Rolls = Roll5Dice();
+                        player2Rolls = RollDice(rollAmount);
                     }
                     else
                     {
@@ -208,18 +198,13 @@ namespace Object_Oriented_Programming_Assignment_2
         }
         public class Sevens : Dice
         {
-            /// <summary>
-            /// Creates and returns an int array containing users rolls
-            /// </summary>
-            /// <returns></returns>
-            public int[] GetRolls()
+            private int diceAmount = 2;
+            public override int[] RollDice(int diceAmount)
             {
-                newRoll();
-                int dice1 = Roll;
-                newRoll();
-                int dice2 = Roll;
-                return new int[] { dice1, dice2 };
+                return base.RollDice(diceAmount);
+                
             }
+
             /// <summary>
             /// MEthod to test the rolls are equal to 7
             /// </summary>
@@ -253,9 +238,9 @@ namespace Object_Oriented_Programming_Assignment_2
                 while (gameOn) 
                 {
                     printer.RollEnter(player1Name);
-                    int[] playerRolls = GetRolls();
+                    int[] playerRolls = RollDice(diceAmount);
                     if (opName != "Computer") { printer.RollEnter(opName); }
-                    int[] computerRolls = GetRolls();
+                    int[] computerRolls = RollDice(diceAmount);
                     printer.PrintRolls(playerRolls, player1Name);
                     printer.PrintRolls(computerRolls, opName);
                     

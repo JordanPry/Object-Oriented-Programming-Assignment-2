@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Object_Oriented_Programming_Assignment_2
 {
-    internal class Dice
+    internal abstract class DiceRoller 
+    {
+        public abstract int[] RollDice(int rollsAmount);
+    
+    }
+    internal class Dice : DiceRoller
     {
         private Random _random;
         private int _roll;
@@ -32,5 +37,22 @@ namespace Object_Oriented_Programming_Assignment_2
         /// Method that returns the read only variable Roll from the privatised data _roll
         /// </summary>
         public int Roll { get { return _roll; } }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="diceAmount"></param>
+        /// <returns></returns>
+        public override int[] RollDice(int diceAmount)
+        {
+            int roll;
+            int[] rolls = new int[diceAmount];
+            for (int i = 0; i < diceAmount; i++)
+            {
+                newRoll();
+                roll = Roll;
+                rolls[i] = roll;
+            }
+            return rolls;
+        }
     }
 }

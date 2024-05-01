@@ -186,7 +186,6 @@ namespace Object_Oriented_Programming_Assignment_2
                     Console.WriteLine($"Please enter an integer between 1-{optionLength}.");
                     Console.WriteLine("------------------------------------------------");
                 }
-
             }
         }
         /// <summary>
@@ -202,6 +201,7 @@ namespace Object_Oriented_Programming_Assignment_2
             foreach (int roll in rolls) 
             {
                 Console.WriteLine($"Roll {counter}: {roll}");
+                counter++;
             }
             Console.WriteLine("------------------------------------------------");
         }
