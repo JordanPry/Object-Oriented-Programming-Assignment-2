@@ -126,7 +126,18 @@ namespace Object_Oriented_Programming_Assignment_2
                 return printer.OptionChoice(2) == 1;
             
             }
-            
+            /// <summary>
+            /// Method to test whether the game has ended
+            /// </summary>
+            /// <param name="game"></param>
+            /// <param name="player1Name"></param>
+            /// <param name="opName"></param>
+            /// <param name="player1Total"></param>
+            /// <param name="player2Total"></param>
+            /// <returns>
+            /// false if the game logic has been completed
+            /// true if game still needs to be played
+            /// </returns>
             public bool IsGameOver(Game game, string player1Name, string opName, int player1Total, int player2Total) 
             {
                 if (player1Total >= 20)
@@ -142,6 +153,11 @@ namespace Object_Oriented_Programming_Assignment_2
                 return true;
 
             }
+            /// <summary>
+            /// Method that handles all the logic for the game implimentation
+            /// </summary>
+            /// <param name="printer"></param>
+            /// <param name="stats"></param>
             public void GameStart(Printer printer, StatsJSON stats) 
             {
                 Game game = new Game();
@@ -204,11 +220,24 @@ namespace Object_Oriented_Programming_Assignment_2
                 int dice2 = Roll;
                 return new int[] { dice1, dice2 };
             }
+            /// <summary>
+            /// MEthod to test the rolls are equal to 7
+            /// </summary>
+            /// <param name="rolls"></param>
+            /// <returns>
+            /// true if the sum of rolls == 7
+            /// otherwise false
+            /// </returns>
             public bool EqualsSeven(int[] rolls) 
             {
                 return rolls.Sum() == 7;
             
             }
+            /// <summary>
+            /// Method that handles all of the game logic 
+            /// </summary>
+            /// <param name="printer"></param>
+            /// <param name="stats"></param>
             public void GameStart(Printer printer, StatsJSON stats)
             {
                 Game game = new Game();
@@ -244,6 +273,7 @@ namespace Object_Oriented_Programming_Assignment_2
                 }
 
                 bool isDraw = false;
+
                 if (playerTotal > computerTotal)
                 { gameWinner = player1Name; gameLoser = opName; }
 

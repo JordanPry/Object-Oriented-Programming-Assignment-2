@@ -58,7 +58,7 @@ namespace Object_Oriented_Programming_Assignment_2
                     stats.PrintStats();
                     break;
                 case 6:
-                    testing.TestBoth();
+                    testing.TestMenu();
                     break;
                 case 7:
                     Console.Clear();

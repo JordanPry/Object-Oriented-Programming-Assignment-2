@@ -92,6 +92,19 @@ namespace Object_Oriented_Programming_Assignment_2
         
         }
         /// <summary>
+        /// 
+        /// </summary>
+        public void TestChoice() 
+        {
+            Console.WriteLine("------------------------------------------------");
+            Console.WriteLine("Would You like to:");
+            Console.WriteLine("1: Test the games");
+            Console.WriteLine("2: View Previous test data");
+            Console.WriteLine("3: Return to main menu");
+            Console.WriteLine("------------------------------------------------");
+
+        }
+        /// <summary>
         /// DIsplays and prompts user for a name then formats string so first case is upper and rest is lower
         /// Checks whether name exists already within the player database
         /// </summary>

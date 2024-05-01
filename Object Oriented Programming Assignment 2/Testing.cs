@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using static Object_Oriented_Programming_Assignment_2.StatsJSON;
 
 namespace Object_Oriented_Programming_Assignment_2
 {
-    internal class Testing
+    internal class Testing : Printer
     {
         Game.Sevens sevens = new Game.Sevens();
         Game.ThreeOrMore threeOrMore = new Game.ThreeOrMore();
@@ -23,6 +24,13 @@ namespace Object_Oriented_Programming_Assignment_2
             public bool ThreesTest { get; set; }        
         }
         private string filePath = "testOutcomes.json";
+
+        /// <summary>
+        /// Loads the List of TestOutcomes objects from the "testOutcomes.json" file
+        /// Exception handled to return an empty list of gameObjects where tests can be added to 
+        /// and saved to a new file
+        /// </summary>
+        /// <returns></returns>
         public List<TestOutcomes> LoadOutcomes()
         {
             try
@@ -38,11 +46,19 @@ namespace Object_Oriented_Programming_Assignment_2
 
             }
         }
+        /// <summary>
+        /// Saves the data to the file
+        /// </summary>
+        /// <param name="newStats"></param>
         public void SaveOutcomes(List<TestOutcomes> newStats)
         {
             string playerData = JsonConvert.SerializeObject(newStats);
             File.WriteAllText(filePath, playerData);
         }
+        /// <summary>
+        /// Method responsible for correctly tracking the tests and saving them to the file
+        /// </summary>
+        /// <returns></returns>
         public List<TestOutcomes> CreateFile() 
         {
             var newTests = LoadOutcomes();
@@ -58,6 +74,10 @@ namespace Object_Oriented_Programming_Assignment_2
             return newTests;
         
         }
+        /// <summary>
+        /// Void method that prints the Players stats, loads the "tests" in to a a List 
+        /// Loops through each item in the list Displaying test number and whether it passed or failed
+        /// </summary>
         public void PrintTests() 
         {
             List < TestOutcomes > allTests = LoadOutcomes();
@@ -68,7 +88,31 @@ namespace Object_Oriented_Programming_Assignment_2
                 Console.WriteLine($"{testOutcomes.TestName}: Both Tests {successful} ");
             }
         }
+        /// <summary>
+        /// Method to call correct methods depending on users input
+        /// calls a method to display options
+        /// </summary>
+        public void TestMenu() 
+        {
+            TestChoice();
+            switch (OptionChoice(3)) 
+            {
+                case 1:
+                    TestBoth();
+                    break;
+                case 2:
+                    PrintTests();
+                    break;
+                default:
+                    break;
+            
+            }
+        }
 
+        /// <summary>
+        ///Method that loops 10 times to test the game is working as intended
+        ///As RNG is used this helps mitigate and cover all rolls to make sure everything is working
+        /// </summary>
         public void TestBoth() 
         {
             Console.WriteLine("TESTING THREE OR MORE.......");
@@ -78,10 +122,12 @@ namespace Object_Oriented_Programming_Assignment_2
                 CreateFile();
             }
             Console.WriteLine("GAME LOGIC TESTED 10 TIMES, ALL RUNNING AS INTENDED");
-            PrintTests();
             
         }
-
+        /// <summary>
+        /// Method that uses Debug.Assert to Test whether the logic of Sevens Out is Correct
+        /// </summary>
+        /// <returns></returns>
         private bool TestSevens() 
         {
             int[] testRolls;
@@ -93,7 +139,10 @@ namespace Object_Oriented_Programming_Assignment_2
             Debug.Assert(sevens.EqualsSeven(testRolls) == (testRolls[0] + testRolls[1] == 7), "GAME DOESNT END AT CORRECT ENDPOINT");
             return true;
         }
-
+        /// <summary>
+        /// Method that uses Debug.Assert to test whether the logic of ThreeOrMore is Correct
+        /// </summary>
+        /// <returns></returns>
         private bool TestThrees() 
         {
             int[] rolls = threeOrMore.Roll5Dice();

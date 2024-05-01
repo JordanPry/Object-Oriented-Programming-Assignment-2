@@ -21,6 +21,11 @@ namespace Object_Oriented_Programming_Assignment_2
 
         private string filePath = "gameStats.json";
 
+        /// <summary>
+        /// Attempts to load data from the JSON file defined by the file path name within the class
+        /// Exception handled to call a method to Create a new file if file is not found
+        /// </summary>
+        /// <returns>List of the GameStats class with default peramators </returns>
         public List<GameStats> LoadStats()
         {
             try
@@ -30,17 +35,27 @@ namespace Object_Oriented_Programming_Assignment_2
             }
             catch (FileNotFoundException) 
             {
-                Console.WriteLine("File Not Found, Creating file, Creating new File");
+                Console.WriteLine("File Not Found, Creating new File");
                 System.Threading.Thread.Sleep(1500);
                 return CreateFile();
             
             }
         }
+        /// <summary>
+        /// Method used for Updating the stats to a file using the JSon format
+        /// </summary>
+        /// <param name="newStats"></param>
         public void SaveStats(List<GameStats> newStats)
         {
             string playerData = JsonConvert.SerializeObject(newStats);
             File.WriteAllText(filePath, playerData);
         }
+        /// <summary>
+        /// Method Ran when the file cannot be found, creates 3 default players with generic names
+        /// </summary>
+        /// <returns>
+        ///  List of the GameStats class with default peramators
+        /// </returns>
         public List<GameStats> CreateFile() 
         {
             string[] defaultNames = { "Player 1", "Player 2", "Computer" };
@@ -62,6 +77,12 @@ namespace Object_Oriented_Programming_Assignment_2
             return defaultPlayers;
         
         }
+        /// <summary>
+        /// Attempts to find a "Player" based on the user inputted name if player is not found
+        /// The method will continue to ask the user to input names until either a name is found
+        /// or the user enters "Q" to return to the main menu screen
+        /// </summary>
+        /// <returns>Either the Found player name or Q</returns>
         public string LoadPlayer() 
         {
             while (true)
@@ -80,6 +101,14 @@ namespace Object_Oriented_Programming_Assignment_2
             }
         
         }
+        /// <summary>
+        /// Class responsible for updating the data within the Stats file
+        /// Finds the player within the List of GameStats and uses a switch case to 
+        /// correctly find and update the neccessary data 
+        /// </summary>
+        /// <param name="playerName"></param>
+        /// <param name="gameType"></param>
+        /// <param name="gameWin"></param>
         public void UpdateStats(string playerName, string gameType, bool gameWin) 
         {
             List<GameStats> stats = LoadStats();
@@ -100,6 +129,12 @@ namespace Object_Oriented_Programming_Assignment_2
             }
             
         }
+        /// <summary>
+        /// Method used for adding users own personal players
+        /// Checks whethere the user exists and if not
+        /// will allow the addition of a new player to the GameStats file
+        /// </summary>
+        /// <param name="playerName"></param>
         public void AddPlayer(string playerName)
         {
 
@@ -124,7 +159,10 @@ namespace Object_Oriented_Programming_Assignment_2
                 Console.WriteLine("Player Name already exists please enter a Different Name");
             }
         }
-
+        /// <summary>
+        /// Method used for Resetting all users stats apart from name to 0
+        /// Stats will only reset after the user confirms their choice to reset
+        /// </summary>
         public void ResetStats()
         {
             int userChoice = ConfirmChoice();
@@ -144,12 +182,17 @@ namespace Object_Oriented_Programming_Assignment_2
                     return;
             }
         }
+        /// <summary>
+        /// Void method that prints the Players stats, loads the "stats" in to a a List 
+        /// Loops through each item in the list Displaying users stats
+        /// in a formatted way
+        /// </summary>
         public void PrintStats() 
         {
             Console.WriteLine("------------------------------------------------");
             Console.WriteLine("                  Game Stats");
             Console.WriteLine("------------------------------------------------");
-            List<StatsJSON.GameStats> playerStats = LoadStats();
+            List<GameStats> playerStats = LoadStats();
             foreach (var player in playerStats)
             {
                 Console.WriteLine("------------------------------------------------");
